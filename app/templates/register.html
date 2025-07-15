@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registration</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <form method="POST" class="form" novalidate>
+    <p class="form-title">Create a new account</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="alert alert-warning">
+          {% for category, message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {{ form.hidden_tag() }}
+
+    <div class="input-container">
+      {{ form.username(class="form-control", placeholder="Username") }}
+      <span>
+        <svg stroke="currentColor" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
+          <path d="M4 21v-2a4 4 0 013-3.87"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </span>
+    </div>
+
+    <div class="input-container">
+      {{ form.email(class="form-control", placeholder="Email") }}
+      <span>
+        <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" stroke-width="2"
+            stroke-linejoin="round" stroke-linecap="round"></path>
+        </svg>
+      </span>
+    </div>
+
+    <div class="input-container">
+      {{ form.password(class="form-control", placeholder="Password") }}
+      <span>
+        <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+          <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+            stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+        </svg>
+      </span>
+    </div>
+
+    <div class="input-container">
+      {{ form.confirm_password(class="form-control", placeholder="Confirm Password") }}
+      <span>
+        <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+          <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+            stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+        </svg>
+      </span>
+    </div>
+
+    <div class="input-container">
+      {{ form.telegram_id(class="form-control", placeholder="Telegram ID") }}
+      <span>
+        <svg stroke="currentColor" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
+          <path d="M4 21v-2a4 4 0 013-3.87"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </span>
+    </div>
+
+    <button type="submit" class="submit">{{ form.submit.label.text }}</button>
+
+    <p class="login-link">
+      Already have an account? <a href="{{ url_for('auth.login') }}">Login</a>
+    </p>
+  </form>
+
+</body>
+</html>
+

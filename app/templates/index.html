@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <main class="index-container">
+    <header class="header-gradient p-5">
+      <a class="nav-logo" href="/">Task Tracker</a>
+    </header>
+    <section class="content-area" style="scrollbar-width: thin; scrollbar-color: #3b82f6 transparent;">
+      {% if current_user.is_authenticated %}
+      <div class="user-info mb-6">
+        <h1 class="header-title">
+        Welcome to Task Tracker!
+        </h1>
+        <div class="user-info-row">
+
+          <p class="user-info-label">Signed in as</p>
+          <p class="username" title="{{ current_user.username }}">{{ current_user.username }}</p>
+          <div class="user-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="user-icon-svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <nav class="index-links">
+        <a href="{{ url_for('tasks.tasks_list') }}" class="nav-link blue-hover">
+          <span>Task list</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="nav-icon blue-icon"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </a>
+
+        {% if current_user.is_admin %}
+        <a href="{{ url_for('admin.dashboard') }}" class="nav-link yellow-hover">
+          <span>Admin panel</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="nav-icon yellow-icon"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </a>
+        {% endif %}
+
+        <a href="{{ url_for('auth.logout') }}" class="nav-link red-hover">
+          <span>Logout</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="nav-icon red-icon"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </a>
+      </nav>
+
+      <div class="telegram-binding mt-8 text-center">
+        <h4 class="telegram-title">Binding Telegram</h4>
+        {% if current_user.telegram_id and not request.args.get('edit_telegram') %}
+        <div class="telegram-tied">
+          Telegram tied: <strong>{{ current_user.telegram_id }}</strong>
+        </div>
+        <div class="telegram-edit-link">
+          <a href="{{ url_for('main.index', edit_telegram=1) }}" class="telegram-edit-button">
+            Edit
+          </a>
+        </div>
+        {% else %}
+        <form method="POST" action="{{ url_for('main.link_telegram') }}" class="telegram-form">
+          <input
+            type="text"
+            name="telegram_id"
+            placeholder="Enter your Telegram chat_id"
+            value="{{ current_user.telegram_id or '' }}"
+            required
+            class="telegram-input"
+          />
+          <button type="submit" class="telegram-save-button">
+            Save
+          </button>
+        </form>
+        {% endif %}
+      </div>
+
+      {% else %}
+
+      <div class="not-logged-in">
+        <a href="{{ url_for('auth.login') }}" class="btn-login">
+          Login
+        </a>
+        <a href="{{ url_for('auth.register') }}" class="btn-register">
+          Register
+        </a>
+      </div>
+      {% endif %}
+    </section>
+  </main>
+
+
+  <footer class="footer">
+    All rights reserved
+  </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

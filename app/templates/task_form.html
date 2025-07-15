@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.title.data %}Edit{% else %}Add{% endif %} Task</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-light text-dark">
+    <div class="container form-container">
+        <h2 class="text-center mb-4">{% if form.title.data %}Edit{% else %}Add{% endif %} Task</h2>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group mb-3">
+                <label for="title">{{ form.title.label }}</label>
+                {{ form.title(class="form-control") }}
+            </div>
+            <div class="form-group mb-3">
+                <label for="is_done">{{ form.is_done.label }}</label>
+                {{ form.is_done(class="form-check-input") }}
+            </div>
+            <div class="form-group mb-3">
+                <label for="deadline">{{ form.deadline.label }}</label>
+                {{ form.deadline(class="form-control", type="datetime-local") }}
+            </div>
+            <div class="form-group text-center">
+                {{ form.submit(class="btn btn-custom") }}
+            </div>
+        </form>
+        <div class="text-center back-btn">
+            <a href="{{ url_for('tasks.tasks_list') }}" class="btn btn-outline-primary">Back</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+

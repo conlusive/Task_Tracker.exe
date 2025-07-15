@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" class="html-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tasks</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body class="body-flex-column">
+
+    <nav class="nav-sticky">
+    <a class="nav-logo" href="/">Task Tracker</a>
+    <div class="tasks-nav-links">
+        <a href="{{ url_for('main.index') }}" class="tasks-nav-link">Profile</a>
+        <a href="#" class="tasks-nav-link">Contacts</a>
+        <a href="{{ url_for('main.logout') }}" class="nav-link logout-link">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-container">
+    <div class="tasks-header">
+      <h2 class="tasks-title">Tasks</h2>
+      <a href="{{ url_for('tasks.create') }}" class="btn-add">Add</a>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="tasks-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Deadline</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for task in tasks %}
+          <tr class="table-row">
+            <td>{{ loop.index }}</td>
+            <td class="task-title">{{ task.title }}</td>
+            <td>
+              <span class="{% if task.is_done %}status-done{% else %}status-notdone{% endif %}">
+                {% if task.is_done %}Done{% else %}Not done{% endif %}
+              </span>
+            </td>
+            <td>
+              {% if task.deadline %}
+                {{ task.deadline.strftime('%Y-%m-%d %H:%M:%S') }}
+              {% else %}
+                —
+              {% endif %}
+            </td>
+            <td class="actions-cell">
+              <a href="{{ url_for('tasks.edit_task', task_id=task.id) }}" class="btn-edit">Edit</a>
+              <form action="{{ url_for('tasks.delete_task', task_id=task.id) }}" method="post" class="form-inline">
+                <input type="submit" value="Delete" class="btn-delete" />
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="footer">
+    All rights reserved
+  </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
